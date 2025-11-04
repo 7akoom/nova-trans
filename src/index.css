@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer utilities {
+  .text-gradient-accent {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 217 33% 17%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 217 33% 17%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 217 33% 17%;
+
+    --primary: 217 91% 35%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 217 91% 35%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 217 20% 51%;
+
+    --accent: 1 66% 51%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 217 91% 35%;
+
+    --radius: 0.75rem;
+    
+    /* Custom tokens for logistics theme */
+    --gradient-hero: linear-gradient(135deg, hsl(217 91% 35%) 0%, hsl(217 91% 45%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(1 66% 51%) 0%, hsl(354, 69%, 38%) 100%);
+    --shadow-sm: 0 2px 8px hsl(217 91% 35% / 0.08);
+    --shadow-md: 0 4px 16px hsl(217 91% 35% / 0.12);
+    --shadow-lg: 0 8px 32px hsl(217 91% 35% / 0.16);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 217 33% 10%;
+    --foreground: 0 0% 98%;
+
+    --card: 217 33% 13%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 217 33% 13%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 217 91% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 217 20% 65%;
+
+    --accent: 24 90% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 217 91% 55%;
+    
+    --gradient-hero: linear-gradient(135deg, hsl(217 91% 35%) 0%, hsl(217 91% 50%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(24 90% 50%) 0%, hsl(24 90% 60%) 100%);
+    --shadow-sm: 0 2px 8px hsl(0 0% 0% / 0.2);
+    --shadow-md: 0 4px 16px hsl(0 0% 0% / 0.3);
+    --shadow-lg: 0 8px 32px hsl(0 0% 0% / 0.4);
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
