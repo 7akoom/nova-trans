@@ -16,7 +16,8 @@ const translations = {
     // tracking: "تتبع الشحنة",
     about: "من نحن",
     contact: "اتصل بنا",
-    getQuote: "احصل على عرض سعر",
+    expolre: "اكتشف المزيد",
+    getQuote: "اطلب عرض سعر",
     
     // Hero
     heroTitle: "حلول الشحن والخدمات اللوجستية",
@@ -57,6 +58,14 @@ const translations = {
     learnMore: "اعرف المزيد",
     submit: "إرسال",
     companyName: "شحن سريع",
+
+    // Team
+    ourTeam: "فريق عمل محترف",
+    ourTeamDesc: "لدينا فريق متخصص بخبرة عالمية في الشحن اللوجستي وإدارة العمليات.",
+    ceo: "المدير التنفيذي",
+    operationsManager: "مدير العمليات",
+    logisticsSupervisor: "مشرف اللوجستيات"
+
   },
   en: {
     // Navbar
@@ -65,7 +74,8 @@ const translations = {
     tracking: "Tracking",
     about: "About Us",
     contact: "Contact",
-    getQuote: "Get a Quote",
+    expolre: "Explore more",
+    getQuote: "Get quote",
     
     // Hero
     heroTitle: "Comprehensive Shipping and",
@@ -106,6 +116,14 @@ const translations = {
     learnMore: "Learn More",
     submit: "Submit",
     companyName: "Fast Shipping",
+
+    // Team
+    ourTeam: "Professional Team",
+    ourTeamDesc: "We have a specialized team with global experience in logistics shipping and operations management.",
+    ceo: "Chief Executive Officer",
+    operationsManager: "Operations Manager",
+    logisticsSupervisor: "Logistics Supervisor"
+
   },
 };
 

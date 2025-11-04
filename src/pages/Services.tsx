@@ -70,9 +70,9 @@ const Services = () => {
               >
                 {/* Image */}
                 <motion.div
-                  className="md:w-1/2 p-[3px] rounded-lg flex justify-center"
+                  className="md:w-1/2 p-[2px] rounded-lg flex justify-center"
                   style={{
-                    background: "linear-gradient(135deg, #ff4d4f, #ff7f50)"
+                    background: "linear-gradient(135deg, #4d7fff, #cc0000)"
                   }}
                   initial={{ scale: 0.95 }}
                   whileHover={{ scale: 1.05 }}
@@ -93,19 +93,19 @@ const Services = () => {
                   whileHover={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <Card className="bg-blue-600 text-white">
+                  <Card className="text-black">
                     <CardContent className="p-8">
                       <div className="flex items-center gap-4 mb-4">
                         <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-                          <service.icon className="w-8 h-8 text-white" />
+                          <service.icon className=" bg-blue-900 w-16 h-16 rounded-lg text-white" />
                         </div>
-                        <CardTitle className="text-2xl">{service.title}</CardTitle>
+                        <CardTitle className="text-2xl font-bold">{service.title}</CardTitle>
                       </div>
-                      <p className="mb-4 text-white/90">{service.description}</p>
+                      <p className="mb-4 text-black">{service.description}</p>
                       <ul className="grid grid-cols-1 gap-2">
                         {service.features.map((feature, idx) => (
                           <li key={idx} className="flex items-center gap-2">
-                            <Check className="w-5 h-5 text-white" />
+                            <Check className="w-5 h-5 text-blue-900" />
                             <span>{feature}</span>
                           </li>
                         ))}
