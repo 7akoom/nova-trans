@@ -64,7 +64,33 @@ const translations = {
     ourTeamDesc: "لدينا فريق متخصص بخبرة عالمية في الشحن اللوجستي وإدارة العمليات.",
     ceo: "المدير التنفيذي",
     operationsManager: "مدير العمليات",
-    logisticsSupervisor: "مشرف اللوجستيات"
+    logisticsSupervisor: "مشرف اللوجستيات",
+
+    // Contact Page
+    contactUsDesc: "نحن هنا لمساعدتك. تواصل معنا وسنرد عليك في أقرب وقت ممكن",
+    sendMessage: "أرسل لنا رسالة",
+    callUs: "اتصل بنا",
+    emailUs: "راسلنا",
+    visitUs: "زورنا",
+    fillRequired: "الرجاء ملء جميع الحقول المطلوبة",
+    sending: "جاري الإرسال...",
+    name: "الاسم",
+    email: "البريد الإلكتروني",
+    phone: "رقم الهاتف",
+    subject: "الموضوع",
+    message: "الرسالة",
+    messagePlaceholder: "اكتب رسالتك هنا...",
+    workingHoursTitle: "ساعات العمل",
+    workingHours: "السبت - الخميس: 8:00 صباحًا - 6:00 مساءً|الجمعة: مغلق|خدمة العملاء متوفرة 24/7",
+    loading: "جار التحميل...",
+
+    aboutTitle: "من نحن",
+    loadingError: "حدث خطأ في التحميل",
+
+    servicesNotFound: "لم تجد ما تبحث عنه؟",
+    servicesNotFoundDesc: "تواصل معنا وسنوفر لك حلول مخصصة تناسب احتياجاتك",
+    ourClients: "عملاؤنا",
+    clientsDesc: "موثوق بنا من قبل كبرى الشركات حول العالم",
 
   },
   en: {
@@ -122,7 +148,33 @@ const translations = {
     ourTeamDesc: "We have a specialized team with global experience in logistics shipping and operations management.",
     ceo: "Chief Executive Officer",
     operationsManager: "Operations Manager",
-    logisticsSupervisor: "Logistics Supervisor"
+    logisticsSupervisor: "Logistics Supervisor",
+
+    // Contact Page
+    contactUsDesc: "We are here to help you. Contact us and we will respond as soon as possible",
+    sendMessage: "Send Us a Message",
+    callUs: "Call Us",
+    emailUs: "Email Us",
+    visitUs: "Visit Us",
+    fillRequired: "Please fill all required fields",
+    sending: "Sending...",
+    name: "Name",
+    email: "Email",
+    phone: "Phone",
+    subject: "Subject",
+    message: "Message",
+    messagePlaceholder: "Write your message here...",
+    workingHoursTitle: "Working Hours",
+    workingHours: "Sat - Thu: 8:00 AM - 6:00 PM|Fri: Closed|Customer service available 24/7",
+    loading: "Loading...",
+
+    aboutTitle: "About Us",
+    loadingError: "Loading error",
+    servicesNotFound: "Didn't find what you're looking for?",
+    servicesNotFoundDesc: "Contact us and we will provide you with customized solutions that suit your needs",
+
+    ourClients: "Our Clients",
+    clientsDesc: "Trusted by top companies around the world",
 
   },
 };

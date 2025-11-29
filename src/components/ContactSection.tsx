@@ -5,8 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const ContactSection = () => {
+  const { t } = useLanguage();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -16,48 +18,103 @@ const ContactSection = () => {
     message: "",
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) {
-      toast.error("الرجاء ملء جميع الحقول المطلوبة");
-      return;
-    }
-    setIsLoading(true);
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    setTimeout(() => {
-      toast.success("تم إرسال رسالتك بنجاح!");
+  if (!formData.name || !formData.email || !formData.message) {
+    toast.error(t("fillRequired"));
+    return;
+  }
+
+  setIsLoading(true);
+
+  try {
+    const response = await fetch("http://localhost:8000/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      toast.success(t("submit") + " " + t("success") || "تم الإرسال!");
       setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-      setIsLoading(false);
-    }, 1000);
-  };
+    } else {
+      toast.error(data.message || "حدث خطأ، حاول مرة أخرى");
+    }
+  } catch (error) {
+    console.error(error);
+    toast.error("حدث خطأ، حاول مرة أخرى");
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">
         <Card className="max-w-3xl mx-auto shadow-custom-lg animate-fade-in">
-          <CardHeader className="bg-gradient-hero text-primary-foreground">
-            <CardTitle className="text-2xl text-center">أرسل لنا رسالة</CardTitle>
+          <CardHeader className="bg-gradient-hero text-primary-foreground rounded-t-xl">
+            <CardTitle className="text-2xl text-center">{t("sendMessage")}</CardTitle>
           </CardHeader>
+
           <CardContent className="p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Input name="name" value={formData.name} onChange={handleChange} placeholder="الاسم" />
-                <Input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="البريد الإلكتروني"/>
+                <Input
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder={t("name")}
+                  required
+                />
+                <Input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder={t("email")}
+                  required
+                />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Input name="phone" value={formData.phone} onChange={handleChange} placeholder="رقم الهاتف"/>
-                <Input name="subject" value={formData.subject} onChange={handleChange} placeholder="الموضوع"/>
+                <Input
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder={t("phone")}
+                />
+                <Input
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  placeholder={t("subject")}
+                />
               </div>
 
-              <Textarea name="message" value={formData.message} onChange={handleChange} placeholder="اكتب رسالتك هنا..." rows={6}/>
+              <Textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder={t("messagePlaceholder")}
+                rows={6}
+                required
+              />
               
               <Button type="submit" disabled={isLoading} className="w-full bg-gradient-hero text-lg h-12">
-                {isLoading ? "جاري الإرسال..." : <>إرسال الرسالة <Send className="mr-2 w-5 h-5" /></>}
+                {isLoading ? t("sending") : (
+                  <>
+                    {t("submit")} <Send className="mr-2 w-5 h-5" />
+                  </>
+                )}
               </Button>
             </form>
           </CardContent>

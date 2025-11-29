@@ -1,221 +1,97 @@
-import { useState } from "react";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useMemo } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { toast } from "sonner";
-import { ContactForm } from "@/types/shipping";
+import ContactSection from "@/components/ContactSection";
+import ContactInfoCard from "@/components/ContactInfoCard";
+import WorkingHours from "@/components/WorkingHours";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useSettings } from "@/hooks/useSettings";
+import { CONTACT_INFO_CONFIG } from "@/constants/contact.constants";
+import heroImage from "@/assets/contact.jpg";
 
 const Contact = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState<ContactForm>({
-    name: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
-  });
+  const { language, t } = useLanguage();
+  const { settings, loading, error } = useSettings();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const contactInfo = useMemo(() => {
+    if (!settings) return [];
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.name || !formData.email || !formData.message) {
-      toast.error("الرجاء ملء جميع الحقول المطلوبة");
-      return;
-    }
-
-    setIsLoading(true);
-
-    // Simulate API call
-    setTimeout(() => {
-      // TODO: Replace with actual API call
-      console.log("Contact form submitted:", formData);
-      toast.success("تم إرسال رسالتك بنجاح! سنتواصل معك قريبًا");
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        subject: "",
-        message: "",
-      });
-      setIsLoading(false);
-    }, 1000);
-  };
-
-  const contactInfo = [
-    {
-      icon: Phone,
-      title: "اتصل بنا",
-      content: "503 027 996 963+",
-      gradient: "from-blue-500 to-blue-600",
-    },
-    {
-      icon: Mail,
-      title: "راسلنا",
-      content: "info@novatrans.com",
-      gradient: "from-green-500 to-green-600",
-    },
-    {
-      icon: MapPin,
-      title: "زورنا",
-      content: "الرياض، المملكة العربية السعودية",
-      gradient: "from-orange-500 to-orange-600",
-    },
-  ];
+    return CONTACT_INFO_CONFIG.map((config) => ({
+      ...config,
+      title: t(config.titleKey),
+      content: config.contentKey === "address"
+        ? (language === "ar" ? settings.ar_address : settings.en_address)
+        : settings[config.contentKey as keyof typeof settings] as string,
+    }));
+  }, [settings, language, t]);
 
   return (
-    <div className="min-h-screen bg-background" dir="rtl">
+    <div className="min-h-screen bg-background" dir={language === "ar" ? "rtl" : "ltr"}>
       <Navbar />
 
-      <section className="pt-32 pb-16">
+      {/* Hero Section with Background Image */}
+      <section className="relative pt-32 pb-20 overflow-hidden">
+        <img
+          src={heroImage}
+          alt="Contact Us"
+          loading="lazy"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/30"></div>
+
+        <div className="relative container mx-auto px-4 text-center animate-fade-in z-10">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+            {t("contactUs")}
+          </h1>
+          <p className="text-xl text-white/90 max-w-2xl mx-auto">
+            {t("contactUsDesc")}
+          </p>
+        </div>
+      </section>
+
+      {/* Contact Info Cards */}
+      <section className="py-16">
         <div className="container mx-auto px-4">
-          {/* Header */}
-          <div className="text-center mb-12 animate-fade-in">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
-              تواصل معنا
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              نحن هنا لمساعدتك. تواصل معنا وسنرد عليك في أقرب وقت ممكن
-            </p>
-          </div>
-
-          {/* Contact Info Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            {contactInfo.map((info, index) => (
-              <Card
-                key={index}
-                className="text-center shadow-custom-md hover:shadow-custom-lg transition-all animate-fade-in"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <CardContent className="p-8">
-                  <div
-                    className={`w-16 h-16 mx-auto mb-4 bg-gradient-to-r ${info.gradient} rounded-2xl flex items-center justify-center`}
-                  >
-                    <info.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2 text-foreground">{info.title}</h3>
-                  <p className="text-muted-foreground">{info.content}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {/* Contact Form */}
-          <div className="max-w-3xl mx-auto">
-            <Card className="shadow-custom-lg animate-fade-in" style={{ animationDelay: "300ms" }}>
-              <CardHeader className="bg-gradient-hero text-primary-foreground">
-                <CardTitle className="text-2xl">أرسل لنا رسالة</CardTitle>
-              </CardHeader>
-              <CardContent className="p-8">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium mb-2 text-foreground">
-                        الاسم <span className="text-destructive">*</span>
-                      </label>
-                      <Input
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="أدخل اسمك الكامل"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2 text-foreground">
-                        البريد الإلكتروني <span className="text-destructive">*</span>
-                      </label>
-                      <Input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="example@email.com"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium mb-2 text-foreground">
-                        رقم الهاتف
-                      </label>
-                      <Input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        placeholder="+966 XX XXX XXXX"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2 text-foreground">
-                        الموضوع
-                      </label>
-                      <Input
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleChange}
-                        placeholder="موضوع الرسالة"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2 text-foreground">
-                      الرسالة <span className="text-destructive">*</span>
-                    </label>
-                    <Textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder="اكتب رسالتك هنا..."
-                      rows={6}
-                      required
-                    />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full bg-gradient-hero hover:opacity-90 text-lg h-12"
-                  >
-                    {isLoading ? (
-                      "جاري الإرسال..."
-                    ) : (
-                      <>
-                        إرسال الرسالة
-                        <Send className="mr-2 w-5 h-5" />
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Additional Info */}
-          <Card className="max-w-3xl mx-auto mt-8 bg-muted/30 animate-fade-in" style={{ animationDelay: "400ms" }}>
-            <CardContent className="p-8">
-              <h3 className="text-xl font-semibold mb-4 text-foreground">ساعات العمل</h3>
-              <div className="space-y-2 text-muted-foreground">
-                <p>السبت - الخميس: 8:00 صباحًا - 6:00 مساءً</p>
-                <p>الجمعة: مغلق</p>
-                <p className="text-primary font-medium mt-4">خدمة العملاء متوفرة 24/7</p>
+            {loading ? (
+              <div className="col-span-3">
+                <LoadingSkeleton />
               </div>
-            </CardContent>
-          </Card>
+            ) : error ? (
+              <p className="text-center col-span-3 text-red-500">
+                {t("loadingError")}
+              </p>
+            ) : (
+              contactInfo.map((info, index) => (
+                <ContactInfoCard
+                  key={index}
+                  icon={info.icon}
+                  title={info.title}
+                  content={info.content}
+                  gradient={info.gradient}
+                  index={index}
+                />
+              ))
+            )}
+          </div>
+
+          {/* Contact Form Section */}
+          <ContactSection />
+
+          {/* Google Map Section with Working Hours */}
+          <div className="relative mt-12 w-full h-[500px]">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3246.241588266352!2d35.76717487462954!3d35.54773523729775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1526afbe24aa5397%3A0x6c7aaa1f8b417bfa!2ssoul%20cafe!5e0!3m2!1sen!2siq!4v1764365209113!5m2!1sen!2siq"
+              className="w-full h-full border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Location Map"
+            ></iframe>
+
+            <WorkingHours />
+          </div>
         </div>
       </section>
 

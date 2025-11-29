@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Facebook, Instagram } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -5,6 +6,23 @@ import logo from "@/assets/nova-logo.png";
 
 const Footer = () => {
   const { t, language } = useLanguage();
+  const [settings, setSettings] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/settings")
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success" && data.data.length > 0) {
+          setSettings(data.data[0]);
+        }
+      })
+      .catch(err => console.error(err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <div className="text-center py-12">جار التحميل...</div>;
+  if (!settings) return null;
 
   return (
     <footer className="bg-primary text-primary-foreground mt-20" dir={language === "ar" ? "rtl" : "ltr"}>
@@ -81,33 +99,29 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-center gap-2 text-sm text-primary-foreground/80">
                 <Phone className="w-4 h-4" />
-                <span dir="ltr">+963 996027503</span>
+                <span dir="rtl">{settings.phone}</span>
               </li>
               <li className="flex items-center gap-2 text-sm text-primary-foreground/80">
                 <Mail className="w-4 h-4" />
-                <span>info@novatrans.com</span>
+                <span>{settings.email}</span>
               </li>
               <li className="flex items-center gap-2 text-sm text-primary-foreground/80">
                 <MapPin className="w-4 h-4" />
                 <span>
-                  {language === "ar" 
-                    ? "اللاذقية، سوريا"
-                    : "Lattakia, Syria"
-                  }
+                  {language === "ar" ? settings.ar_address : settings.en_address}
                 </span>
               </li>
             </ul>
 
             {/* Social Media */}
             <div className="flex gap-3 mt-4">
-              <a href="#" className="w-8 h-8 bg-primary-foreground/10 hover:bg-gradient-accent rounded-lg flex items-center justify-center transition-colors">
+              <a href={settings.facebook_url} target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-primary-foreground/10 hover:bg-gradient-accent rounded-lg flex items-center justify-center transition-colors">
                 <Facebook className="w-4 h-4" />
               </a>
               
-              <a href="#" className="w-8 h-8 bg-primary-foreground/10 hover:bg-gradient-accent rounded-lg flex items-center justify-center transition-colors">
+              <a href={settings.instagram_url} target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-primary-foreground/10 hover:bg-gradient-accent rounded-lg flex items-center justify-center transition-colors">
                 <Instagram className="w-4 h-4" />
               </a>
-              
             </div>
           </div>
         </div>

@@ -21,7 +21,7 @@ const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="fixed top-0 w-full backdrop-blur-sm border-b border-border z-50 shadow-custom-sm" dir={language === "ar" ? "rtl" : "ltr"}>
+    <nav className="fixed top-0 w-full bg-black-200 backdrop-blur-lg border-b border-border z-50 shadow-custom-sm" dir={language === "ar" ? "rtl" : "ltr"}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity pr-2 pt-2 pb-2">
@@ -40,7 +40,7 @@ const Navbar = () => {
                 key={link.path}
                 to={link.path}
                 className={`text-sm font-bold transition-colors hover:text-primary ${
-                  isActive(link.path) ? "text-primary" : "text-muted-black"
+                  isActive(link.path) ? "text-red-500" : "text-muted-black"
                   }`}
               >
                 {link.name}
@@ -76,8 +76,8 @@ const Navbar = () => {
                   onClick={() => setIsOpen(false)}
                   className={`text-sm font-medium py-2 px-4 rounded-lg transition-colors ${
                     isActive(link.path)
-                      ? "bg-primary/10 text-primary"
-                      : "text-muted-foreground hover:bg-muted"
+                      ? "bg-primary/20 text-red-500"
+                      : "text-muted-foreground hover:bg-primary"
                   }`}
                 >
                   {link.name}
