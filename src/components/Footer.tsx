@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Facebook, Instagram } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import logo from "@/assets/nova-logo.png";
+import { API_BASE_URL } from "@/config/api.config";
 
 const Footer = () => {
   const { t, language } = useLanguage();
@@ -10,7 +11,7 @@ const Footer = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/settings")
+    fetch(`${API_BASE_URL}/api/settings`)
       .then(res => res.json())
       .then(data => {
         if (data.status === "success" && data.data.length > 0) {

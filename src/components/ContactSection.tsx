@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { API_BASE_URL } from "@/config/api.config";
 
 const ContactSection = () => {
   const { t } = useLanguage();
@@ -33,7 +34,7 @@ const ContactSection = () => {
   setIsLoading(true);
 
   try {
-    const response = await fetch("http://localhost:8000/api/contact", {
+    const response = await fetch(`${API_BASE_URL}/api/contact`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
