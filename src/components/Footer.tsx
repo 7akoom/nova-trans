@@ -22,8 +22,17 @@ const Footer = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div className="text-center py-12">جار التحميل...</div>;
-  if (!settings) return null;
+  if (loading) {
+    return <footer className="text-center py-12">جار التحميل...</footer>;
+  }
+  const footerSettings = settings ?? {
+    phone: "",
+    email: "",
+    ar_address: "",
+    en_address: "",
+    facebook_url: "#",
+    instagram_url: "#",
+  };
 
   return (
     <footer className="bg-primary text-primary-foreground mt-20" dir={language === "ar" ? "rtl" : "ltr"}>
@@ -100,27 +109,27 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-center gap-2 text-sm text-primary-foreground/80">
                 <Phone className="w-4 h-4" />
-                <span dir="rtl">{settings.phone}</span>
+                <span dir="rtl">{footerSettings.phone}</span>
               </li>
               <li className="flex items-center gap-2 text-sm text-primary-foreground/80">
                 <Mail className="w-4 h-4" />
-                <span>{settings.email}</span>
+                <span>{footerSettings.email}</span>
               </li>
               <li className="flex items-center gap-2 text-sm text-primary-foreground/80">
                 <MapPin className="w-4 h-4" />
                 <span>
-                  {language === "ar" ? settings.ar_address : settings.en_address}
+                  {language === "ar" ? footerSettings.ar_address : footerSettings.en_address}
                 </span>
               </li>
             </ul>
 
             {/* Social Media */}
             <div className="flex gap-3 mt-4">
-              <a href={settings.facebook_url} target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-primary-foreground/10 hover:bg-gradient-accent rounded-lg flex items-center justify-center transition-colors">
+              <a href={footerSettings.facebook_url} target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-primary-foreground/10 hover:bg-gradient-accent rounded-lg flex items-center justify-center transition-colors">
                 <Facebook className="w-4 h-4" />
               </a>
               
-              <a href={settings.instagram_url} target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-primary-foreground/10 hover:bg-gradient-accent rounded-lg flex items-center justify-center transition-colors">
+              <a href={footerSettings.instagram_url} target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-primary-foreground/10 hover:bg-gradient-accent rounded-lg flex items-center justify-center transition-colors">
                 <Instagram className="w-4 h-4" />
               </a>
             </div>

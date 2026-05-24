@@ -1,1 +1,1 @@
-export const API_BASE_URL = "https://nova-api.lenda-agency.com";
+export const API_BASE_URL = "https://nova-logistic-group.com/nova-backend/public";
